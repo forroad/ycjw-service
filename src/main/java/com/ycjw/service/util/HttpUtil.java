@@ -1,5 +1,6 @@
 package com.ycjw.service.util;
 
+import com.alibaba.fastjson.JSON;
 import com.ycjw.service.config.SSLSocketClient;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -25,6 +26,21 @@ public class HttpUtil {
             Request request = new Request.Builder()
                     .url(url)
                     .get()
+                    .build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+        }
+        return "";
+    }
+
+    public static String bodyPost(String url, Object body){
+        try {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), JSON.toJSONString(body));
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody)
                     .build();
             Response response = client.newCall(request).execute();
             return response.body().string();

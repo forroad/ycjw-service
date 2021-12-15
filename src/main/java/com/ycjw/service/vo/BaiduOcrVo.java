@@ -21,6 +21,13 @@ public class BaiduOcrVo {
         return baiduOcrVo;
     }
 
+    public static BaiduOcrVo of(String keyword){
+        BaiduOcrVo baiduOcrVo = new BaiduOcrVo();
+        baiduOcrVo.setWordResultNum(1);
+        baiduOcrVo.setWordsResult(Collections.singletonList(new WordVo(keyword)));
+        return baiduOcrVo;
+    }
+
     public boolean isLegal(){
         return wordResultNum != 0 && !CollectionUtils.isEmpty(wordsResult);
     }
