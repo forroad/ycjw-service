@@ -21,7 +21,9 @@ public class PocrServiceImpl implements PocrService {
     @Override
     public PocrVo pocr(String image) {
         try {
-            String result = HttpUtil.bodyPost(pocrAPi, PocrDTO.of(image));
+            PocrDTO pocrDTO = PocrDTO.of(image);
+            String result = HttpUtil.bodyPost(pocrAPi, pocrDTO);
+            log.info("pocr body:{}, result:{}",JSON.toJSONString(pocrDTO), result);
             return JSON.parseObject(result, PocrVo.class);
         }catch (Exception e){
             log.error("pocr error! exception:{}", ExceptionUtils.getStackTrace(e));
